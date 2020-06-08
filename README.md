@@ -5,6 +5,7 @@ A Python script that scrapes a Moss File Similarity Report into a local file
 ```angular2
 pip install BeautifulSoup4
 pip install requests
+pip install lxml
 ```
 
 ### 2.) Run From the Command Line
