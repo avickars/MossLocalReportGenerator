@@ -1,5 +1,5 @@
 # MossLocalReportGenerator
-A Python script that scrapes a Moss File Similarity Report into a local file
+A Python script that scrapes a Moss File Similarity Report into local html files
 ## To run the script
 ### 1.) Install Dependencies
 ```angular2
