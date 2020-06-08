@@ -3,13 +3,20 @@ from bs4 import BeautifulSoup
 import requests
 import sys
 
+# Testing if a file path was given
+if len(sys.argv) > 2:
+    path = sys.argv[2]
+    path = path.replace('\\', '/') + '/'
+else:
+    path = ""
+
 html = requests.get(sys.argv[1])
-soup = BeautifulSoup(html.content,features="lxml")
+soup = BeautifulSoup(html.content, features="lxml")
 
 subReportUrls = soup.find('table').find_all('a')
 
 # Extracting the number of lines matched in each comparison
-numLinesMatched = soup.find('table').find_all('td',{'align':'right'})
+numLinesMatched = soup.find('table').find_all('td', {'align': 'right'})
 
 # Extracting report date and options
 headerInfo = soup.find_all('p')
@@ -55,11 +62,11 @@ reportHTMLBottom = """
 for i in range(0, len(subReportUrls), 2):
     nameLeft = subReportUrls[i].contents[0]
     nameRight = subReportUrls[i + 1].contents[0]
-    linesMatched = numLinesMatched[int(i/2)].contents[0]
-    reportLocation = createSubReport(subReportUrls[i].attrs['href'], nameLeft[:-6], nameRight[:-6])
+    linesMatched = numLinesMatched[int(i / 2)].contents[0]
+    reportLocation = createSubReport(subReportUrls[i].attrs['href'], nameLeft[:-6], nameRight[:-6], path)
     reportHTMLTop = reportHTMLTop + f"""<tr><td> <a href={reportLocation}> {nameLeft} </a> </td>""" + f"""<td> <a href={reportLocation}> {nameRight} </a> </td>""" + f"""<td align=\"right\">{linesMatched}</td> </tr>"""
 
 reportHTMLTop = reportHTMLTop + reportHTMLBottom
-mossReport = open('mossReport.html', 'wb')
+mossReport = open(path + 'mossReport.html', 'wb')
 mossReport.write(reportHTMLTop.encode())
 mossReport.close()

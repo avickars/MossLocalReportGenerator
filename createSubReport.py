@@ -3,11 +3,11 @@ import os
 from bs4 import BeautifulSoup
 
 
-def createSubReport(url, nameLeft, nameRight):
+def createSubReport(url, nameLeft, nameRight, path):
     # Create directory if it doesn't already exist
     try:
         # Create target Directory
-        os.mkdir('Reports')
+        os.mkdir(path + 'Reports')
     except FileExistsError:
         print()
 
@@ -33,19 +33,19 @@ def createSubReport(url, nameLeft, nameRight):
 
     # Creating the html doc for the Top section of full report
     pageTop = requests.get(url + pageTop)
-    filePageTop = open('Reports/' + nameLeft + '_VS_' + nameRight + '_TOP.html', 'wb')
+    filePageTop = open(path + 'Reports/' + nameLeft + '_VS_' + nameRight + '_TOP.html', 'wb')
     filePageTop.write(pageTop.content)
     filePageTop.close()
 
     # Creating the html doc for the Left section of full report
     pageLeft = requests.get(url + pageLeft)
-    filePageLeft = open('Reports/' + nameLeft + '_VS_' + nameRight + '_LEFT.html', 'wb')
+    filePageLeft = open(path + 'Reports/' + nameLeft + '_VS_' + nameRight + '_LEFT.html', 'wb')
     filePageLeft.write(pageLeft.content)
     filePageLeft.close()
 
     # Creating the html doc for the Right section of full report
     pageRight = requests.get(url + pageRight)
-    filePageRight = open('Reports/' + nameLeft + '_VS_' + nameRight + '_RIGHT.html', 'wb')
+    filePageRight = open(path + 'Reports/' + nameLeft + '_VS_' + nameRight + '_RIGHT.html', 'wb')
     filePageRight.write(pageRight.content)
     filePageRight.close()
 
@@ -68,7 +68,7 @@ def createSubReport(url, nameLeft, nameRight):
     """
 
     # Creating the html doc for the full sub report.
-    fullReport = open('Reports/' + nameLeft + '_VS_' + nameRight + '_FULL.html', 'wb')
+    fullReport = open(path + 'Reports/' + nameLeft + '_VS_' + nameRight + '_FULL.html', 'wb')
     fullReport.write(html.encode())
     fullReport.close()
 
